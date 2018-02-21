@@ -7,7 +7,7 @@ import argparse
 import os
 import json
 
-from main.preprocessing_helpers import extract_video_data, extract_categories_data, parse_comments_data
+from preprocessing_helpers import extract_video_data, extract_categories_data, parse_comments_data
 
 DATA_DIR = "data"
 

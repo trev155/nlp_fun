@@ -3,6 +3,7 @@ preprocessing.py
 
 Objective of this file is to read input data and output it all into a file that is easier to parse.
 """
+
 import argparse
 import os
 import json
@@ -10,7 +11,6 @@ import json
 from preprocessing_helpers import extract_video_data, extract_categories_data, parse_comments_data
 
 DATA_DIR = "data"
-
 
 def preprocess(comments_csv, videos_csv, categories_json):
     """
@@ -46,9 +46,14 @@ if __name__ == "__main__":
         comments_filename = "UScomments.csv"
         videos_filename = "USvideos.csv"
         categories_filename = "US_category_id.json"
+    elif args.input == "GB":
+        comments_filename = "GBcomments.csv"
+        videos_filename = "GBvideos.csv"
+        categories_filename = "GB_category_id.json"
     else:
         print("Mode invalid: Valid modes = 'US', 'GB'")
         exit(1)
+
     comments_csv_file = os.path.join(os.getcwd(), DATA_DIR, comments_filename)
     videos_csv_file = os.path.join(os.getcwd(), DATA_DIR, videos_filename)
     categories_json_file = os.path.join(os.getcwd(), DATA_DIR, categories_filename)

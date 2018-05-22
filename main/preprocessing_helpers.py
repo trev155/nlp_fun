@@ -9,7 +9,7 @@ def extract_video_data(videos_file):
     """
     Extract video data.
 
-    Video data is in the form of:
+    The format of the video data to be returned is in the form of:
     {
         "video_id": {
             "title": title,
@@ -18,7 +18,7 @@ def extract_video_data(videos_file):
         }
     }
     :param videos_file: file handler
-    :return: dictionary of {str, video_data}
+    :return: dictionary
     """
     videos_data = {}
     for i, line in enumerate(videos_file):
@@ -59,7 +59,7 @@ def extract_categories_data(categories_file):
     """
     Extract categories data.
 
-    The category data looks like:
+    The category data to be returned will look like:
     {
         "category_id": "category_name
     }
@@ -102,7 +102,7 @@ def parse_comments_data(videos_data, categories_data, comments_file):
     :param videos_data: dictionary of
     :param categories_data: dictionary of
     :param comments_file: file handle
-    :return:
+    :return: dictionary containing all data entries
     """
     all_data = {}
     for i, line in enumerate(comments_file):
@@ -169,4 +169,3 @@ def separate_csv_line(s):
     reader = csv.reader(s.splitlines(), delimiter=",")
     fields = list(reader)[0]
     return fields
-

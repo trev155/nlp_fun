@@ -3,9 +3,10 @@ Working with the "Trending Youtube Statistics" dataset, found on: https://www.ka
 
 I don't know what I'm going to do with the data yet, but most likely some form on sentiment analysis on comments.
 
-## TODO
-Run:
-`python3 main/preprocessing.py -i US -o output/preproc.json`
+## TODOs
+- documentation for how to setup and run
+- proper preprocessing of comment text (eg. convert to lowercase, remove punctuation and/or stopwords, etc.)
 
-Test:
-`python3 main/preprocessing_helpers_test.py`
+Later:
+- feature extraction / spaCy stuff - extracting features
+- classification (ideas? classifying a video's category based on its features?)

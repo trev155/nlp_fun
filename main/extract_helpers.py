@@ -100,14 +100,15 @@ def parse_comments_data(videos_data, categories_data, comments_file):
             ]
         }
     }
-    :param videos_data: dictionary of
-    :param categories_data: dictionary of
+    :param videos_data: dictionary
+    :param categories_data: dictionary
     :param comments_file: file handle
     :return: dictionary containing all data entries
     """
     all_data = {}
     for i, line in enumerate(comments_file):
         if i == 0:
+            # first line of the file is the header
             continue
 
         # Parse line
@@ -124,7 +125,8 @@ def parse_comments_data(videos_data, categories_data, comments_file):
             continue
 
         comment_entry = {
-            "comment_text": comment_text,
+            # make sure to preprocess the comment text
+            "comment_text": preprocess_string(comment_text),
             "likes": likes,
             "replies": replies
         }
@@ -175,6 +177,25 @@ def separate_csv_line(s):
 ########################
 # String Preprocessing #
 ########################
+def preprocess_string(str):
+    """
+    The main preprocessing procedure.
+
+    Currently, preprocessing involves:
+    - remove whitespace
+    - remove newlines
+
+    More things may be added to this list.
+
+    :param str: string to preprocess
+    :return: string, the modified string
+    """
+    modified = str
+    modified = remove_whitespace(modified)
+    modified = remove_newlines(modified)
+    return modified
+
+
 def remove_whitespace(str):
     """
     Remove leading and trailing whitespace
@@ -211,18 +232,3 @@ def handle_punctuation(str):
     modified = " ".join(str_split)
     return modified
 
-
-def preprocess_string(str):
-    """
-    Given a string str, preprocess it.
-    What does preprocessing involve?
-    - remove whitespace
-    - remove newlines
-
-    :param str: string to preprocess
-    :return: string, the modified string
-    """
-    modified = str
-    modified = remove_whitespace(modified)
-    modified = remove_newlines(modified)
-    return modified

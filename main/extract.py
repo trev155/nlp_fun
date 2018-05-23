@@ -1,5 +1,5 @@
 """
-preprocessing.py
+extract.py
 
 Objective of this file is to read input data and output it all into a file that is easier to parse.
 """
@@ -8,7 +8,7 @@ import argparse
 import os
 import json
 
-from preprocessing_helpers import extract_video_data, extract_categories_data, parse_comments_data
+from extract_helpers import extract_video_data, extract_categories_data, parse_comments_data
 
 DATA_DIR = "data"
 

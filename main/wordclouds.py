@@ -33,7 +33,7 @@ Format of a data entry:
 import argparse
 import json
 import os
-import preprocessing_helpers
+import extract_helpers
 from wordcloud import WordCloud
 
 ###########
@@ -135,7 +135,7 @@ def generate_wordcloud(text, name, output_dir):
 if __name__ == "__main__":
     # Preliminary parsing - get category id and names
     with open(CATEGORY_DATA, "r") as category_file:
-        category_data = preprocessing_helpers.extract_categories_data(category_file)
+        category_data = extract_helpers.extract_categories_data(category_file)
 
     # Command line parsing
     parser = argparse.ArgumentParser(description="Preprocess CSV files")

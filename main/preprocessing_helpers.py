@@ -1,5 +1,6 @@
 import csv
 import json
+import re
 
 
 ###################
@@ -169,3 +170,59 @@ def separate_csv_line(s):
     reader = csv.reader(s.splitlines(), delimiter=",")
     fields = list(reader)[0]
     return fields
+
+
+########################
+# String Preprocessing #
+########################
+def remove_whitespace(str):
+    """
+    Remove leading and trailing whitespace
+    :param str: string
+    :return: string
+    """
+    return str.strip()
+
+
+def remove_newlines(str):
+    """
+    Remove newlines.
+    :param str: string
+    :return: string
+    """
+    modified = str
+    modified = modified.replace("\n", "")
+    modified = modified.replace("\\n", "")
+    return modified
+
+
+def handle_punctuation(str):
+    """
+    NOTE - currently unused, since nltk doesn't require this.
+
+    Handle punctuation.
+    - separation of punctuation, [.?!]
+    - removes all other punctuation. i'm not sure if this is the best way to go.
+    :param str: string
+    :return: string
+
+    """
+    str_split = re.findall(r"[\w]+|[.!?]+", str)
+    modified = " ".join(str_split)
+    return modified
+
+
+def preprocess_string(str):
+    """
+    Given a string str, preprocess it.
+    What does preprocessing involve?
+    - remove whitespace
+    - remove newlines
+
+    :param str: string to preprocess
+    :return: string, the modified string
+    """
+    modified = str
+    modified = remove_whitespace(modified)
+    modified = remove_newlines(modified)
+    return modified

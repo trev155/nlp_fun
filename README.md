@@ -1,12 +1,13 @@
 # nlp_fun
 Working with the "Trending Youtube Statistics" dataset, found on: https://www.kaggle.com/datasnaek/youtube/data
 
-I don't know what I'm going to do with the data yet, but most likely some form on sentiment analysis on comments.
+## usage (incomplete)
+1. run preprocessing script (reads original data from files, combines them, outputs them into a .json)
+2a. run string preprocessing (read in .json from part 1, does simple string preprocessing on every comment), output into
+a new .json.
+2b. (optional) run wordclouds.py, with input from step 2
 
-## TODOs
-- documentation for how to setup and run
-- proper preprocessing of comment text (eg. convert to lowercase, remove punctuation and/or stopwords, etc.)
+3. take input from 2a, perform sentiment analysis with nltk
 
-Later:
-- feature extraction / spaCy stuff - extracting features
-- classification (ideas? classifying a video's category based on its features?)
+## planned
+- sentiment analysis 

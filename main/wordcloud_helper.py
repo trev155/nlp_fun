@@ -4,7 +4,7 @@ wordcloud.py
 Main functionality to generate a wordcloud.
 (uses the library from amueller, https://github.com/amueller/word_cloud)
 """
-from wordcloud import WordCloud
+from wordcloud import WordCloud, STOPWORDS
 import os
 
 
@@ -16,6 +16,7 @@ def generate_wordcloud(text, name, output_dir):
     :param name: str, filename to output
     :param output_dir: str, output directory name
     """
-    wc = WordCloud(background_color="white", width=800, height=600, collocations=False)
+    wc = WordCloud(background_color="white", width=800, height=600, collocations=False, max_words=150,
+                   stopwords=STOPWORDS)
     wc.generate(text)
     wc.to_file(os.path.join(output_dir, name) + ".png")

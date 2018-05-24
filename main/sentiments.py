@@ -25,13 +25,15 @@ Format of a data entry:
 
 import argparse
 import json
+import os
 import extract_helpers
 import wordcloud_helper
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk import tokenize
 
-
-CATEGORY_DATA = "data/US_category_id.json"
+DATA_DIR = "data"
+US_CATEGORIES = "US_category_id.json"
+GB_CATEGORIES = "GB_category_id.json"
 
 
 def extract_sentiments(comments):
@@ -138,15 +140,17 @@ def sentiments_by_category_id(input_filename, output_dir, category_id):
 
 
 if __name__ == "__main__":
-    # Preliminary parsing - get category id and names
-    with open(CATEGORY_DATA, "r") as category_file:
-        category_data = extract_helpers.extract_categories_data(category_file)
-
     # Command line parsing
     parser = argparse.ArgumentParser(description="Preprocess CSV files")
     parser.add_argument("-i", "--input", help="Specify the input file to use", required=True)
     parser.add_argument("-o", "--output", help="Specify the output directory to use", required=True)
+    parser.add_argument("-s", "--set", help="Specify the data set to use", required=True, choices=set(("US", "GB")))
     parser.add_argument("-c", "--cat", help="Category id to generate wordclouds for", required=True)
     args = parser.parse_args()
+
+    # Preliminary parsing - get category id and names
+    category_filename = US_CATEGORIES if args.set == "US" else GB_CATEGORIES
+    with open(os.path.join(os.getcwd(), DATA_DIR, category_filename), "r") as category_file:
+        category_data = extract_helpers.extract_categories_data(category_file)
 
     sentiments_by_category_id(args.input, args.output, args.cat)

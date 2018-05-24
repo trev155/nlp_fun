@@ -26,13 +26,17 @@ Format of a data entry:
 
 import argparse
 import json
+import os
 import extract_helpers
 import wordcloud_helper
 
 ###########
 # GLOBALS #
 ###########
-CATEGORY_DATA = "data/US_category_id.json"
+
+DATA_DIR = "data"
+US_CATEGORIES = "US_category_id.json"
+GB_CATEGORIES = "GB_category_id.json"
 
 
 ###########
@@ -116,16 +120,18 @@ def counts_to_text(counts):
 
 
 if __name__ == "__main__":
-    # Preliminary parsing - get category id and names
-    with open(CATEGORY_DATA, "r") as category_file:
-        category_data = extract_helpers.extract_categories_data(category_file)
-
     # Command line parsing
     parser = argparse.ArgumentParser(description="Preprocess CSV files")
     parser.add_argument("-i", "--input", help="Specify the input file to use", required=True)
     parser.add_argument("-o", "--output", help="Specify the output directory to use", required=True)
+    parser.add_argument("-s", "--set", help="Specify the data set to use", required=True, choices=set(("US", "GB")))
     parser.add_argument("-c", "--cat", help="Category id to generate wordclouds for", required=False)
     args = parser.parse_args()
+
+    # Preliminary parsing - get category id and names
+    category_filename = US_CATEGORIES if args.set == "US" else GB_CATEGORIES
+    with open(os.path.join(os.getcwd(), DATA_DIR, category_filename), "r") as category_file:
+        category_data = extract_helpers.extract_categories_data(category_file)
 
     # If command line argument contains -c option, only generate a word cloud for that category id.
     # If -c option not provided, generate a word cloud for every category id.

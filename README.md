@@ -8,22 +8,22 @@ Uses python3.
 Have to install these packages: wordcloud, nltk
 
 1. run extract.py script (reads original data from files, combines them, preprocesses the comments a bit, outputs them into a .json)
-`python main/extract.py -i US -o output/preprocUS.json`
+`python main/extract.py -s US -o output/preprocUS.json`
 - this will read in the US files, and generate an output file at `output/preprocUS.json`
 
-`python main/extract.py -i GB -o output/preprocGB.json`
+`python main/extract.py -s GB -o output/preprocGB.json`
 - this will read in the GB files, and generate an output file at `output/preprocGB.json`
 
 Tests:
 `python main/extract_helpers_test.py`
 
 2a. Generate wordclouds by category id.
-`python main/wordcloud_by_category.py -i output/preprocUS.json -o output/wordclouds -c 24`
-- this will generate a wordcloud for all of the comments of all of the videos that are in category id 24 (Entertainment)
-- to see the list of category ids, look at the `US_category_id.json` file
+`python main/wordcloud_by_category.py -i output/preprocUS.json -o output/wordcloudsUS -s US -c 24
+- this will generate a wordcloud for all of the comments of all of the videos that are in category id 24 (Entertainment), for US videos.
+- to see the list of category ids, look at the `*_category_id.json` files (in the `data` directory).
 - some categories don't have videos
 
-`python main/wordcloud_by_category.py -i output/preprocUS.json -o output/wordclouds`
+`python main/wordcloud_by_category.py -i output/preprocUS.json -o output/wordcloudsUS -s US`
 - this will go through every category and generate a wordcloud for all comments for that category
 
 2b. Sentiments and wordclouds, by category id.
@@ -32,9 +32,9 @@ Then, I use nltk/vader to get the sentiment score of each comment, each video in
 I separate comments based on if they have positive or negative sentiment.
 Then, I generate a wordcloud for all the positive comments, and a wordcloud for all the negative comments.
 
-`python main/sentiments.py -i output/preprocUS.json -o output/wordclouds -c 25`
+`python main/sentiments.py -i output/preprocUS.json -o output/wordcloudsUS -s US -c 25`
 
 ## TODOs
-- separation of US / GB outputs (for wordcloud_by_category.py, sentiments.py)
+- adjust wordcloud settings - show less words, make it a bit more legible
 - ability to wordcloud on a specific video
 - more complex analytics, eg) get the top 10 comments (in terms of likes/dislikes ratio) for each of the top 10 videos for a specific category, and make a wordcloud for these comments

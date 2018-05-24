@@ -11,6 +11,13 @@ import json
 from extract_helpers import extract_video_data, extract_categories_data, parse_comments_data
 
 DATA_DIR = "data"
+US_COMMENTS = "UScomments.csv"
+US_VIDEOS = "USvideos.csv"
+US_CATEGORIES = "US_category_id.json"
+GB_COMMENTS = "GBcomments.csv"
+GB_VIDEOS = "GBvideos.csv"
+GB_CATEGORIES = "GB_category_id.json"
+
 
 def preprocess(comments_csv, videos_csv, categories_json):
     """
@@ -33,8 +40,8 @@ def preprocess(comments_csv, videos_csv, categories_json):
 if __name__ == "__main__":
     # Command line parsing
     parser = argparse.ArgumentParser(description="Preprocess CSV files")
-    parser.add_argument("-i", "--input", help="Specify the input set to use", required=True)
-    parser.add_argument("-o", "--output", help="Specify the output file name to use", required=True)
+    parser.add_argument("-s", "--set", help="Specify the data set to use", required=True)
+    parser.add_argument("-o", "--output", help="Specify the output file path to use", required=True)
     args = parser.parse_args()
 
     # Construct input file names
@@ -42,14 +49,14 @@ if __name__ == "__main__":
     videos_filename = None
     categories_filename = None
 
-    if args.input == "US":
-        comments_filename = "UScomments.csv"
-        videos_filename = "USvideos.csv"
-        categories_filename = "US_category_id.json"
-    elif args.input == "GB":
-        comments_filename = "GBcomments.csv"
-        videos_filename = "GBvideos.csv"
-        categories_filename = "GB_category_id.json"
+    if args.set == "US":
+        comments_filename = US_COMMENTS
+        videos_filename = US_VIDEOS
+        categories_filename = US_CATEGORIES
+    elif args.set == "GB":
+        comments_filename = GB_COMMENTS
+        videos_filename = GB_VIDEOS
+        categories_filename = GB_CATEGORIES
     else:
         print("Mode invalid: Valid modes = 'US', 'GB'")
         exit(1)

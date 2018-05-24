@@ -2,7 +2,6 @@ import csv
 import json
 import re
 
-
 ###################
 # Data Extraction #
 ###################
@@ -135,6 +134,11 @@ def parse_comments_data(videos_data, categories_data, comments_file):
             all_data[video_id]["comments"].append(comment_entry)
         # Otherwise, create a new entry - make sure to fetch the appropriate video and category data
         else:
+            # this stuff is done to avoid keyerrors that may arise (for GB dataset)
+            cat_id = videos_data[video_id]["category_id"]
+            if cat_id not in categories_data:
+                continue
+
             video_data = {
                 "title": videos_data[video_id]["title"],
                 "channel_title": videos_data[video_id]["channel_title"],

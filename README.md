@@ -1,13 +1,40 @@
 # nlp_fun
 Working with the "Trending Youtube Statistics" dataset, found on: https://www.kaggle.com/datasnaek/youtube/data
 
-## usage (incomplete)
-1. run preprocessing script (reads original data from files, combines them, outputs them into a .json)
-2a. run string preprocessing (read in .json from part 1, does simple string preprocessing on every comment), output into
-a new .json.
-2b. (optional) run wordclouds.py, with input from step 2
+Point of this is to dabble into analyzing data. It's simple for sure - i'm not doing anything revolutionary, mostly just processing data and running it through some NLP libraries.
 
-3. take input from 2a, perform sentiment analysis with nltk
+## Run
+Uses python3.
+Have to install these packages: wordcloud, nltk
 
-## planned
-- sentiment analysis 
+1. run extract.py script (reads original data from files, combines them, preprocesses the comments a bit, outputs them into a .json)
+`python main/extract.py -i US -o output/preprocUS.json`
+- this will read in the US files, and generate an output file at `output/preprocUS.json`
+
+`python main/extract.py -i GB -o output/preprocGB.json`
+- this will read in the GB files, and generate an output file at `output/preprocGB.json`
+
+Tests:
+`python main/extract_helpers_test.py`
+
+2a. Generate wordclouds by category id.
+`python main/wordcloud_by_category.py -i output/preprocUS.json -o output/wordclouds -c 24`
+- this will generate a wordcloud for all of the comments of all of the videos that are in category id 24 (Entertainment)
+- to see the list of category ids, look at the `US_category_id.json` file
+- some categories don't have videos
+
+`python main/wordcloud_by_category.py -i output/preprocUS.json -o output/wordclouds`
+- this will go through every category and generate a wordcloud for all comments for that category
+
+2b. Sentiments and wordclouds, by category id.
+A variant of 2a, where I go through all the videos of a specific category id.
+Then, I use nltk/vader to get the sentiment score of each comment, each video in that category.
+I separate comments based on if they have positive or negative sentiment.
+Then, I generate a wordcloud for all the positive comments, and a wordcloud for all the negative comments.
+
+`python main/sentiments.py -i output/preprocUS.json -o output/wordclouds -c 25`
+
+## TODOs
+- separation of US / GB outputs (for wordcloud_by_category.py, sentiments.py)
+- ability to wordcloud on a specific video
+- more complex analytics, eg) get the top 10 comments (in terms of likes/dislikes ratio) for each of the top 10 videos for a specific category, and make a wordcloud for these comments

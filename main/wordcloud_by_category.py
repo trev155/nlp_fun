@@ -1,15 +1,9 @@
 """
-wordclouds.py
+wordcloud_by_category.py
 
-Generate wordclouds.
-(uses the library from amueller, https://github.com/amueller/word_cloud)
+Generates a wordcloud for each category id.
 
-I'll generate one for each category id. There are other ways to split up the videos, but I'll just stick with one
-technique for now.
-
-Run preprocessing first - the preprocessing script produces a .json file that we take in as input.
-The .json file will have a specific format, as shown below.
-
+Input file comes from the output of extract.py, which generates a .json file with data entries.
 Format of a data entry:
 {
     video_id: {
@@ -32,9 +26,8 @@ Format of a data entry:
 
 import argparse
 import json
-import os
 import extract_helpers
-from wordcloud import WordCloud
+import wordcloud_helper
 
 ###########
 # GLOBALS #
@@ -45,14 +38,17 @@ CATEGORY_DATA = "data/US_category_id.json"
 ###########
 # HELPERS #
 ###########
-def wordcloud_for_specific_category_id(category_id):
+def wordcloud_for_specific_category_id(input_filename, output_dir, category_id):
     """
     Generate a word cloud for the category_id.
-    :param category_id: str, category id
+
+    :param input_filename: string, the filename of the input data file
+    :param output_dir: string, the name of the output dir
+    :param category_id: string, category id
     """
     print("Starting: Generate a word cloud for category id (%s)" % category_id)
 
-    with open(args.input, "r") as input_file:
+    with open(input_filename, "r") as input_file:
         all_data_entries = json.load(input_file)
 
         # get all videos with specified category
@@ -68,7 +64,7 @@ def wordcloud_for_specific_category_id(category_id):
         output_filename = category_id + "-" + category_data[category_id]
 
         # generate the word cloud
-        generate_wordcloud(counts_text, output_filename, args.output)
+        wordcloud_helper.generate_wordcloud(counts_text, output_filename, output_dir)
 
 
 def get_token_counts(data_entries):
@@ -119,19 +115,6 @@ def counts_to_text(counts):
     return " ".join(str_list)
 
 
-def generate_wordcloud(text, name, output_dir):
-    """
-    Generate a word cloud, given text.
-
-    :param text: str, tokens have to be space-separated
-    :param name: str, filename to output
-    :param output_dir: str, output directory name
-    """
-    wc = WordCloud(background_color="white", width=800, height=600, collocations=False)
-    wc.generate(text)
-    wc.to_file(os.path.join(output_dir, name) + ".png")
-
-
 if __name__ == "__main__":
     # Preliminary parsing - get category id and names
     with open(CATEGORY_DATA, "r") as category_file:
@@ -147,7 +130,7 @@ if __name__ == "__main__":
     # If command line argument contains -c option, only generate a word cloud for that category id.
     # If -c option not provided, generate a word cloud for every category id.
     if args.cat is not None:
-        wordcloud_for_specific_category_id(args.cat)
+        wordcloud_for_specific_category_id(args.input, args.output, args.cat)
     else:
         for cat_id in category_data:
-            wordcloud_for_specific_category_id(cat_id)
+            wordcloud_for_specific_category_id(args.input, args.output, cat_id)

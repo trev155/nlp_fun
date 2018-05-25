@@ -1,11 +1,7 @@
 """
 wordcloud_by_id.py
 
-2 options
-- if you provide the -l option, the script outputs a list of video ids and titles to use.
-- if you don't provide the -l option, you have to provide the -v option and specify a video id.
-
-A wordcloud is generated for all of the comments for that video id.
+A wordcloud is generated for all of the comments for a specfic video id.
 """
 
 import argparse

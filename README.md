@@ -8,6 +8,7 @@ Uses python3.
 Have to install these packages: wordcloud, nltk
 
 1. run extract.py script (reads original data from files, combines them, preprocesses the comments a bit, outputs them into a .json)
+
 `python3 main/extract.py -s US -o output/preprocUS.json`
 - this will read in the US files, and generate an output file at `output/preprocUS.json`
 
@@ -15,6 +16,7 @@ Have to install these packages: wordcloud, nltk
 - this will read in the GB files, and generate an output file at `output/preprocGB.json`
 
 Tests:
+
 `python3 main/extract_helpers_test.py`
 
 2. List videos metadata.
@@ -23,6 +25,7 @@ Lists all video metadata (likes, views, category, etc) for all videos.
 `python3 main/video_list.py -i output/preprocUS.json`
 
 2a. Generate wordclouds by category id.
+
 `python3 main/wordcloud_by_category.py -i output/preprocUS.json -o output/wordcloudsUS -s US -c 24`
 - this will generate a wordcloud for all of the comments of all of the videos that are in category id 24 (Entertainment), for US videos.
 - to see the list of category ids, look at the `*_category_id.json` files (in the `data` directory).
@@ -35,6 +38,7 @@ Lists all video metadata (likes, views, category, etc) for all videos.
 A variant of 2a, where we generate a wordcloud for a specific video id.
 
 Example:
+
 `python3 main/wordcloud_by_id.py -i output/preprocUS.json -o output/wordcloudsUS -v ckXN4Tc6-c8`
 
 This will generate a wordcloud file, `ckXN4Tc6-c8.png` in `output/wordcloudUS`.
@@ -48,4 +52,9 @@ Then, I generate a wordcloud for all the positive comments, and a wordcloud for 
 `python3 main/sentiments.py -i output/preprocUS.json -o output/wordcloudsUS -s US -c 25`
 
 ## TODOs
-- more complex analytics, eg) get the top 10 comments (in terms of likes/dislikes ratio) for each of the top 10 videos for a specific category, and make a wordcloud for these comments
+- more complex analytics, eg) get the top 10 comments (in terms of likes/dislikes ratio) for 
+each of the top 10 videos for a specific category, and make a wordcloud for these comments
+
+## Results
+Listing some perhaps interesting findings from the data.
+// TODO

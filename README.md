@@ -17,6 +17,11 @@ Have to install these packages: wordcloud, nltk
 Tests:
 `python3 main/extract_helpers_test.py`
 
+2. List videos metadata.
+Lists all video metadata (likes, views, category, etc) for all videos.
+
+`python3 main/video_list.py -i output/preprocUS.json`
+
 2a. Generate wordclouds by category id.
 `python3 main/wordcloud_by_category.py -i output/preprocUS.json -o output/wordcloudsUS -s US -c 24`
 - this will generate a wordcloud for all of the comments of all of the videos that are in category id 24 (Entertainment), for US videos.
@@ -26,10 +31,13 @@ Tests:
 `python3 main/wordcloud_by_category.py -i output/preprocUS.json -o output/wordcloudsUS -s US`
 - this will go through every category and generate a wordcloud for all comments for that category
 
-2b. wordcloud by video id
+2b. Generate wordclouds by video id.
 A variant of 2a, where we generate a wordcloud for a specific video id.
 
-// TODO documentation here
+Example:
+`python3 main/wordcloud_by_id.py -i output/preprocUS.json -o output/wordcloudsUS -v ckXN4Tc6-c8`
+
+This will generate a wordcloud file, `ckXN4Tc6-c8.png` in `output/wordcloudUS`.
 
 3. Sentiments and wordclouds, by category id.
 A variant of 2a, where I go through all the videos of a specific category id.
@@ -40,7 +48,4 @@ Then, I generate a wordcloud for all the positive comments, and a wordcloud for 
 `python3 main/sentiments.py -i output/preprocUS.json -o output/wordcloudsUS -s US -c 25`
 
 ## TODOs
-- extract list functionality from wordcloud generation in wordcloud_by_id.py
-- list functionality should be sorted in a nice manner
-
 - more complex analytics, eg) get the top 10 comments (in terms of likes/dislikes ratio) for each of the top 10 videos for a specific category, and make a wordcloud for these comments

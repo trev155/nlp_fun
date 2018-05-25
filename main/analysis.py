@@ -9,6 +9,14 @@ Idea:
 - get the top X comments (by likes / dislikes)
 - compute the sentiment score for these comments
 - generate a wordcloud for these comments
+
+- perhaps repeat the process, but for the bottom X videos / comments
+
+Other questions to investigate (these can be done in other scripts):
+- Is there a relationship between the top comments for a video, and its sentiment?
+- Is there a relationship between likes/dislikes ratio and comment sentiment?
+- etc.
+
 """
 
 import argparse

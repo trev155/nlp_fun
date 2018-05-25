@@ -1,11 +1,10 @@
 # nlp_fun
 Working with the "Trending Youtube Statistics" dataset, found on: https://www.kaggle.com/datasnaek/youtube/data
 
-Point of this is to dabble into analyzing data. It's simple for sure - i'm not doing anything revolutionary, mostly just processing data and running it through some NLP libraries.
+Point of this is to dabble into analyzing data.
 
 ## Run
-Uses python3.
-Have to install these packages: wordcloud, nltk
+Uses python3. Have to install these packages: wordcloud, nltk
 
 1. run extract.py script (reads original data from files, combines them, preprocesses the comments a bit, outputs them into a .json)
 
@@ -44,6 +43,7 @@ Example:
 This will generate a wordcloud file, `ckXN4Tc6-c8.png` in `output/wordcloudUS`.
 
 3. Sentiments and wordclouds, by category id.
+
 A variant of 2a, where I go through all the videos of a specific category id.
 Then, I use nltk/vader to get the sentiment score of each comment, each video in that category.
 I separate comments based on if they have positive or negative sentiment.
@@ -51,10 +51,12 @@ Then, I generate a wordcloud for all the positive comments, and a wordcloud for 
 
 `python3 main/sentiments.py -i output/preprocUS.json -o output/wordcloudsUS -s US -c 25`
 
-## TODOs
-- more complex analytics, eg) get the top 10 comments (in terms of likes/dislikes ratio) for 
-each of the top 10 videos for a specific category, and make a wordcloud for these comments
+4. Analysis
+
+// TODO
+
 
 ## Results
 Listing some perhaps interesting findings from the data.
+
 // TODO

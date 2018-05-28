@@ -21,7 +21,8 @@ def construct_stopwords():
         "fag",
         "nigger",
         "nigga",
-        "nugger"
+        "nugger",
+        "nugga"
     ]
 
     new_stopwords = STOPWORDS

@@ -1,5 +1,5 @@
 """
-wordcloud.py
+wordcloud_helper.py
 
 Main functionality to generate a wordcloud.
 (uses the library from amueller, https://github.com/amueller/word_cloud)

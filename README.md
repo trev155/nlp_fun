@@ -3,7 +3,9 @@ Working with the "Trending Youtube Statistics" dataset, found on: https://www.ka
 
 The dataset includes data from the US and the UK.
 
-Point of this is to dabble into analyzing data.
+Point of this is to dabble with working with datasets.
+
+This is purely for personal learning / enjoyment.
 
 ## Run
 Uses python3. Have to install these packages: wordcloud, nltk

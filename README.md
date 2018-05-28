@@ -53,7 +53,13 @@ Then, I generate a wordcloud for all the positive comments, and a wordcloud for 
 
 4. Analysis
 
-// TODO
+`python3 main/analysis.py -i output/preprocUS.json -o output/analysisUS -c 24`
+
+This will run an analysis on the top comments of the top videos for videos with category id = 24.
+The input is specified by the -i option, and can be either the preprocUS.json or the preprocGB.json.
+
+The script will also generate 2 wordclouds - one for the positive comments and one for the negative comments,
+where once again we look at the top comments of the top videos for videos with specified category id. 
 
 
 ## Results

@@ -20,6 +20,9 @@ Tests:
 
 `python3 main/extract_helpers_test.py`
 
+Note:
+I skip processing on some of the videos because of exceptions on some of the input.
+
 2. List videos metadata.
 Lists all video metadata (likes, views, category, etc) for all videos.
 
@@ -64,8 +67,56 @@ There will be text output, containing the top video data and comment data.
 The script will also generate 2 wordclouds - one for the positive comments and one for the negative comments,
 where once again we look at the top comments of the top videos for videos with specified category id. 
 
+## General Results
+The dataset contains a list of the most popular / trending videos (from about 7 months ago). What video categories are
+the most popular? This is fairly easy to figure out (shown below).
 
-## Results
+Most videos are in the following categories: Music, People & Blogs, Comedy, Entertainment, News & Politics, Howto & Style.
+
+### US Categories
+Total videos in dataset = 2266.
+
+FORMAT: Category Name (catid): number of videos
+
+Film & Animation (1): 97
+Autos & Vehicles (2): 35
+Music (10): 329
+Pets & Animals (15): 37
+Sports (17): 139
+Travel & Events (19): 17
+Gaming (20): 27
+People & Blogs (22): 245
+Comedy (23): 211
+Entertainment (24): 458
+News & Politics (25): 178
+Howto & Style (26): 260
+Education (27): 89
+Science & Technology (28): 144
+Nonprofits & Activism (29): 2
+Shorts (43): 1
+
+### GB Categories
+Total videos in dataset = 1690
+
+FORMAT: Category Name (catid): number of videos
+
+Film & Animation (1): 75
+Autos & Vehicles (2): 13
+Music (10): 274
+Pets & Animals (15): 19
+Sports (17): 160
+Travel & Events (19): 10
+Gaming (20): 65
+People & Blogs (22): 242
+Comedy (23): 122
+Entertainment (24): 304
+News & Politics (25): 61
+Howto & Style (26): 252
+Education (27): 44
+Science & Technology (28): 49
+
+
+## Results from analysis script
 Listing some perhaps interesting findings from the data.
 
 I'm not going to analyze all the categories. Some of them are more interesting to me than others,
@@ -260,6 +311,13 @@ by `AlishaMarie`, a comment like this could only have been written by a female:
 wow this video was amazing!!! u and ashley are the cutest! loves the masters inc one w you sis
 compound: 0.95, pos: 0.56, neg: 0.00, neu: 0.44
 ```
+
+### Extra
+I used the `wordcloud_by_id.py` script on the video id (US dataset) `g4xW9aCg2zY` (a Super Mario Odyssey video).
+
+Resulting wordcloud below:
+
+![](output/wordcloudsUS/g4xW9aCg2zY.png)
 
 
 ### Other?

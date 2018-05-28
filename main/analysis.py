@@ -6,16 +6,9 @@ A script that does a bit more in-depth analysis on the data.
 Idea:
 - given a category id,
 - for the top X videos (by likes, dislikes, views, number of comments)
-- get the top X comments (by likes / dislikes)
+- get the top X comments (by likes, replies)
 - compute the sentiment score for these comments
 - generate a wordcloud for these comments
-
-- perhaps repeat the process, but for the bottom X videos / comments
-
-Other questions to investigate (these can be done in other scripts):
-- Is there a relationship between the top comments for a video, and its sentiment?
-- Is there a relationship between likes/dislikes ratio and comment sentiment?
-- etc.
 
 NOTE:
 - the youtube comment extract API is not good (see the comments on the kaggle page)
@@ -42,9 +35,19 @@ As usual, a data entry looks like:
 
 import argparse
 import json
+import os
 import wordcloud_helper
 from collections import OrderedDict
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+
+#############
+# Constants #
+#############
+NUM_VIDEOS = 20
+NUM_COMMENTS = 30
+POSITIVE_THRESHOLD = 0.3
+NEGATIVE_THRESHOLD = -0.3
 
 
 ##########
@@ -89,6 +92,10 @@ def run(input_path, output_path, category_id):
     with open(input_path, "r") as data_file:
         data_entries = json.load(data_file)
 
+    # open output file
+    output_file_name = os.path.join(output_path, category_id + "-" + "output.txt")
+    output_file = open(output_file_name, "w")
+
     # these will hold the positive and negative comments from the top videos
     positive_comments = []
     negative_comments = []
@@ -96,14 +103,16 @@ def run(input_path, output_path, category_id):
     # filter by category
     data_entries = {k: v for (k, v) in data_entries.items() if v["category_id"] == category_id}
     # get top videos
-    top_videos = filter_top_videos(data_entries, 10)
+    top_videos = filter_top_videos(data_entries, NUM_VIDEOS)
 
     # iterate over each of the top videos
     for video_id in top_videos:
+        print("Processing: %s" % video_id)
+
         # get the top comments for the video
         entry = top_videos[video_id]
         video_comments = entry["comments"]
-        video_top_comments = filter_top_comments(video_comments, 20)
+        video_top_comments = filter_top_comments(video_comments, NUM_COMMENTS)
 
         # compute the sentiment scores for each comment
         sentiment_entries = compute_sentiment_entries(video_top_comments)
@@ -113,24 +122,27 @@ def run(input_path, output_path, category_id):
 
         # print out the comments and the sentiment scores
         # accumulation of positive / negative comments
-        print("_" * 80)
-        print("[VIDEO: %s] by [CHANNEL: %s]" % (entry["title"], entry["channel_title"]))
-        print("Views: %s, Likes: %s, Dislikes: %s, Num. Replies: %s" % (entry["views"], entry["likes"], entry["dislikes"], len(entry["comments"])))
-        print("_" * 80)
+        output_file.write("_" * 80 + "\n")
+        output_file.write("[VIDEO: %s] by [CHANNEL: %s]\n" % (entry["title"], entry["channel_title"]))
+        output_file.write("Views: %s, Likes: %s, Dislikes: %s, Num. Replies: %s\n" % (entry["views"], entry["likes"], entry["dislikes"], len(entry["comments"])))
+        output_file.write("_" * 80 + "\n")
+
         for sentiment_entry in sentiment_entries:
             comment = sentiment_entry[0]
             score = sentiment_entry[1]
 
-            if score["compound"] > 0.3:
+            if score["compound"] > POSITIVE_THRESHOLD:
                 positive_comments.append(comment)
-            elif score["compound"] < -0.3:
+            elif score["compound"] < NEGATIVE_THRESHOLD:
                 negative_comments.append(comment)
 
-            print(comment)
-            print(score)
-            print("")
+            output_file.write(comment + "\n")
+            output_file.write("compound: %0.2f, pos: %0.2f, neg: %0.2f, neu: %0.2f\n\n" % (score["compound"], score["pos"], score["neg"], score["neu"]))
+            output_file.flush()
 
     # post processing - generate wordclouds
+    print("Generating wordclouds")
+
     positive_wc_text = " ".join(positive_comments)
     positive_wc_name = category_id + "-" + "positive"
     wordcloud_helper.generate_wordcloud(positive_wc_text, positive_wc_name, output_path)
@@ -138,6 +150,9 @@ def run(input_path, output_path, category_id):
     negative_wc_text = " ".join(negative_comments)
     negative_wc_name = category_id + "-" + "negative"
     wordcloud_helper.generate_wordcloud(negative_wc_text, negative_wc_name, output_path)
+
+    output_file.close()
+    print("Done")
 
 
 def filter_top_videos(data_entries, num_videos):
